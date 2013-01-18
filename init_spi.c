@@ -6,6 +6,14 @@
 
 #ifdef __MSP430_HAS_USCI__
 
+
+/*
+* Funcao para realizar a incializacao do spi.
+*
+* \param a Inteiro que conta o numero de placas do fujioka.
+* \return 0 
+  \see {}
+*/
 int init_spi()
 {
   P3SEL |= 0x11;                            // P3.0,4 USCI_A0 option select
