@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include "diskio.h"
 #include "pff.h"
-#include "spi.h"
+#include "spi/spi.h"
 
 #define DELAY_100US() __delay_cycles(1600)  /* ( 100us/(1/16Mhz) )  = 1600 ticks */
 #define SELECT()    P2OUT &= ~BIT0      /* CS = L */
