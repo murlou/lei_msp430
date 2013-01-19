@@ -1,4 +1,7 @@
-lei_msp430
+MSP430 library and projects
 ==========
 
-Teste de fork
+Support for
+-------------
+* MSP430 Devices
+	* MSP430g2553 (LaunchPad)

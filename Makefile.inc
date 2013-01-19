@@ -1,4 +1,5 @@
 NAME = lei-msp
+TARGET=$(notdir $(PWD))
 
 #########################################
 #				Doxygen 				#
@@ -14,10 +15,10 @@ DOXYGENFLAGS = ./doxygen.conf
 #				msp430-gcc				#
 #		libs in /usr/msp430/lib/		#
 #########################################
-DEVICE=MSP430
+DEVICE=msp430g2553
 COMPILER = msp430
-TARGET = saida
-MMCU =-lfp -mmcu=msp430g2553
+#TARGET = saida
+MMCU =-lfp -mmcu=$(DEVICE)
 LIB_LOCAL = -L/usr/msp430/lib/
 
 #########################################
@@ -42,9 +43,9 @@ LIB_LOCAL = -L/usr/msp430/lib/
 
 #---------------------------------------
 
-MODULES_DIR = modules
+MODULES_DIR = modulos
 SRC_DIR = src
-LIB_DIR = lib
+LIB_DIR = $(MODULES_DIR)/lib
 #ROOT_DIR =.
 
 CC = $(COMPILER)-gcc
@@ -65,7 +66,7 @@ LD_FLAGS = $(LIB_LOCAL) -L$(ROOT_DIR)/$(LIB_DIR)/ -l$(NAME) -lc -lfp -lm $(MMCU)
 CP_FLAGS = -O ihex
 OD_FLAGS = -x --syms
 
-INCLUDES = -I$(ROOT_DIR)/ -I./
+INCLUDES = -I$(ROOT_DIR)/$(MODULES_DIR)/ -I./
 
 # Objetos
 OBJ=$(SRC:.c=.o)
@@ -77,4 +78,4 @@ HEX=_$(TARGET).hex
 ELF=$(TARGET).elf
 
 
-.SILENT:
+#.SILENT:

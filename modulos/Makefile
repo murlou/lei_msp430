@@ -20,7 +20,7 @@ lib:lib/lib$(NAME).a
 	
 lib/lib$(NAME).a: modules
 #	@echo -n "Creating lib ... "
-	$(AR) $(AR_FLAGS) ./$(LIB_DIR)/lib$(NAME).a ./obj/*.o
+	$(AR) $(AR_FLAGS) ./lib/lib$(NAME).a ./obj/*.o
 	@echo lib$(NAME).a "Done."
 
 clean:
