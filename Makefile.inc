@@ -59,8 +59,9 @@ OD = $(COMPILER)-objdump
 # Flags de warning
 WAR=-pedantic -Wall
 OPT = -O3 -Os
+DEBUG=
 
-CC_FLAGS = -c -fno-common $(OPT) $(MMCU) $(INCLUDES)
+CC_FLAGS = -c -fno-common $(OPT) $(MMCU) $(INCLUDES) $(DEBUG)
 AR_FLAGS = rcs
 LD_FLAGS = $(LIB_LOCAL) -L$(ROOT_DIR)/$(LIB_DIR)/ -l$(NAME) -lc -lfp -lm $(MMCU) $(INCLUDES)
 CP_FLAGS = -O ihex
