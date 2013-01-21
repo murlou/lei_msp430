@@ -3,7 +3,7 @@ include ../../Makefile.inc
 SRC=./mmc.c  \
 	./pff.c  \
 	
-ROOT_DIR =..
+ROOT_DIR =../..
 
 OBJ = ${SRC:.c=.o}
 

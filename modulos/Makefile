@@ -2,6 +2,7 @@ include ../Makefile.inc
 
 MMC=./mmc
 SPI=./spi
+GPS=./gps
 
 	
 ROOT_DIR =..
@@ -28,6 +29,12 @@ clean:
 	echo "Objects deleted"
 
 modules:
+	@if find $(GPS) -quit ; then \
+		make -C gps/; \
+		echo "GPS support added" ;\
+	else \
+		echo "Without MMC support" ;\
+	fi
 	@if find $(SPI) -quit; then \
 		make -C spi/; \
 		echo "SPI support added" ;\

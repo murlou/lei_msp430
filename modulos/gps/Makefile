@@ -1,8 +1,8 @@
 include ../../Makefile.inc
 
-SRC=
+SRC=gps.c
 
-ROOT_DIR =..
+ROOT_DIR =../..
 
 OBJ = ${SRC:.c=.o}
 

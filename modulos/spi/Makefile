@@ -2,7 +2,7 @@ include ../../Makefile.inc
 
 SRC=./spi.c
 	
-ROOT_DIR =..
+ROOT_DIR =../..
 
 OBJ = ${SRC:.c=.o}
 

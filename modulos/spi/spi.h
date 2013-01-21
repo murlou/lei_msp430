@@ -4,6 +4,8 @@
 #ifndef SPI_H_
 #define SPI_H_
 
+#include <stdint.h>
+
 /**
  * SMCLK divider arguments for spi_set_divisor
  * assumes 16MHz SMCLK. You need to change if you
