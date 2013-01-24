@@ -7,7 +7,7 @@ ADC=./adc
 CAN=./can
 I2C=./i2c
 UART=./uart
-WIFI=./wi-fi
+WIFI=./wifi
 	
 ROOT_DIR =..
 
@@ -19,15 +19,14 @@ all: lib
 #Gerando documentação	
 docs: $(HDR) $(SRC) 
 	$(DOXYGEN) $(DOXYGENFLAGS)
-	cd ./doc/gen/latex; $(MAKE) ; rm -f *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out *.brf *.blg *.bbl
+	cd ./doc/latex; $(MAKE) ; rm -f *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out *.brf *.blg *.bbl ;  cp refman.pdf ../ ; $(MAKE) clean
 
 lib:lib/lib$(NAME).a
 	
 lib/lib$(NAME).a: modules
-#	@echo -n "Creating lib ... "
 	$(AR) $(AR_FLAGS) ./lib/lib$(NAME).a ./obj/*.o
 	@echo lib$(NAME).a "Done."
-	@size ./lib/lib$(NAME).a -Adt
+#	@size ./lib/lib$(NAME).a -Adt
 
 clean:
 	rm obj/*.o -v
@@ -65,20 +64,20 @@ modules:
 	else \
 		echo "Without CAN support" ;\
 	fi
-	@if test -f $(I2C)/can.c  ; then \
-		make -C can/; \
+	@if test -f $(I2C)/i2c.c  ; then \
+		make -C i2c/; \
 		echo "I2C support added" ;\
 	else \
 		echo "Without I2C support" ;\
 	fi
-	@if test -f $(UART)/can.c  ; then \
-		make -C can/; \
+	@if test -f $(UART)/uart.c  ; then \
+		make -C uart/; \
 		echo "UART support added" ;\
 	else \
 		echo "Without UART support" ;\
 	fi
-	@if test -f $(WIFI)/can.c  ; then \
-		make -C can/; \
+	@if test -f $(WIFI)/wifi.c  ; then \
+		make -C wifi/; \
 		echo "Wi-fi support added" ;\
 	else \
 		echo "Without Wi-fi support" ;\

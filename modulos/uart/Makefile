@@ -1,6 +1,6 @@
 include ../../Makefile.inc
 
-SRC=
+SRC=uart.c
 
 ROOT_DIR =../..
 

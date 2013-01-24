@@ -43,14 +43,17 @@ void spi_initialize(void) {
     UCB0CTL1 = UCSWRST | UCSSEL_2; // Put USCI in reset mode, source USCI clock from SMCLK
     UCB0CTL0 = SPI_MODE_0; // Use SPI MODE 0 - CPOL=0 CPHA=0
 
+#ifdef __MSP430G2553
+
     P1SEL |= BIT5 | BIT6 | BIT7; // configure P1.5, P1.6, P1.7 for USCI
     P1SEL2 |= BIT5 | BIT6 | BIT7;
 
-    UCB0BR0 = LOBYTE(SPI_400kHz); // set initial speed to 400kHz (16MHz/400000)
-    UCB0BR1 = HIBYTE(SPI_400kHz);
-
     P2OUT |= BIT0; // CS on P2.0. start out disabled
     P2DIR |= BIT0; // CS configured as output
+
+#endif
+    UCB0BR0 = LOBYTE(SPI_400kHz); // set initial speed to 400kHz (16MHz/400000)
+    UCB0BR1 = HIBYTE(SPI_400kHz);
 
     UCB0CTL1 &= ~UCSWRST; // release USCI for operation
 }
