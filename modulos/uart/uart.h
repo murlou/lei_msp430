@@ -1,5 +1,7 @@
 #ifndef __UART_H__
 #define __UART_H__
+#ifndef __UART_H__
+#define __UART_H__
 
 /**
 \section{Teste}
@@ -13,12 +15,30 @@ conteudo de teste randomico
 #include <stdio.h>
 #include <myerrno.h>
 
+
+
 #ifdef __MSP430G2553
 
-	//!TODO: Set the pins from witch device
+	//!TODO: Set the pins for every device
 	#define RX_PIN
 	#define TX_PIN
+	#define clk_speed //!TODO: Set clock speed for MSP430G2553
 
+	/**
+	Set a specific bit rate different from the standard bit rate
+		@param unsigned int rate : the new bit rate that will be set on uart module
+		@return Return the difference from the rate wanted and the one that was set
+	*/
+	extern
+	int uart_set_bitrate(unsigned int rate);
+
+#endif
+//MSP430f2274
+#ifdef __MSP430F2274
+
+	#define RX_PIN 0x30// P3.4 - TX
+	#define TX_PIN 0x10// P3.5 - RX
+	#define clk_speed 1000000 // 1Mhz
 	/**
 	Set a specific bit rate different from the standard bit rate
 		@param unsigned int rate : the new bit rate that will be set on uart module
