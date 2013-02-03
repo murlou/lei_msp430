@@ -18,7 +18,7 @@
  * value described in Motorola documentation.
  */
 
-#define SPI_MODE_0 (UCMSB | UCMST | UCSYNC | UCCKPH)			/* CPOL=0 CPHA=0 */
+#define SPI_MODE_0 (UCMSB | UCMST | UCSYNC | UCCKPH)    		/* CPOL=0 CPHA=0 */
 #define SPI_MODE_1 (UCMSB | UCMST | UCSYNC)         			/* CPOL=0 CPHA=1 */
 #define SPI_MODE_2 (UCMSB | UCMST | UCSYNC | UCCKPL | UCCKPH)	/* CPOL=1 CPHA=0 */
 #define SPI_MODE_3 (UCMSB | UCMST | UCSYNC | UCCKPL)			/* CPOL=1 CPHA=1 */
@@ -39,23 +39,43 @@
  * P1.6 - SIMO/MOSI
  * P1.7 - SOMI/MISO
  */
-void spi_initialize(void) {
-    UCB0CTL1 = UCSWRST | UCSSEL_2; // Put USCI in reset mode, source USCI clock from SMCLK
-    UCB0CTL0 = SPI_MODE_0; // Use SPI MODE 0 - CPOL=0 CPHA=0
+int spi_initialize() {
 
 #ifdef __MSP430G2553
-
-    P1SEL |= BIT5 | BIT6 | BIT7; // configure P1.5, P1.6, P1.7 for USCI
+	UCB0CTL1 = UCSWRST | UCSSEL_2; // Put USCI in reset mode, source USCI clock from SMCLK
+    UCB0CTL0 = SPI_MODE_0; // Use SPI MODE 0 - CPOL=0 CPHA=0
+    
+	P1SEL |= BIT5 | BIT6 | BIT7; // configure P1.5, P1.6, P1.7 for USCI
     P1SEL2 |= BIT5 | BIT6 | BIT7;
 
     P2OUT |= BIT0; // CS on P2.0. start out disabled
     P2DIR |= BIT0; // CS configured as output
-
-#endif
-    UCB0BR0 = LOBYTE(SPI_400kHz); // set initial speed to 400kHz (16MHz/400000)
+	
+	UCB0BR0 = LOBYTE(SPI_400kHz); // set initial speed to 400kHz (16MHz/400000)
     UCB0BR1 = HIBYTE(SPI_400kHz);
 
     UCB0CTL1 &= ~UCSWRST; // release USCI for operation
+	return success;
+#endif
+    
+#ifdef __MSP430F2274
+						//DETALHE: Nesse modo, P3.0 -- Master CLK
+						//					   P3.4 -- UCASIMO
+						//					   P3.5 -- UCASOMI
+						
+	UCA0CTL1 |= UCSSEL_2; // SMCLK
+	UCA0CTL0 |= SPI_MODE_0; // 3-pin, 8-bit SPI master
+	
+	P3SEL |= BIT0 | BIT4 | BIT5 |; // P3.0, P3.4, P3.5 USCI_A0 option select
+	
+	UCA0BR0 |= 0x02;		// Initial speed BRCLK = SMCLK/2 = 1.2Mhz/2 = 600 mHz
+	UCA0BR1 = 0;
+	UCA0MCTL = 0;
+	
+	UCA0CTL1 &= ~UCSWRST; // Initialize USCI state machine
+	return success;
+#endif
+	
 }
 
 /**
