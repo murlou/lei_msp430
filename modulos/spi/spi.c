@@ -56,9 +56,8 @@ int spi_initialize() {
 
     UCB0CTL1 &= ~UCSWRST; // release USCI for operation
 	return success;
-#endif
     
-#ifdef __MSP430F2274
+#elif __MSP430F2274
 						//DETALHE: Nesse modo, P3.0 -- Master CLK
 						//					   P3.4 -- UCASIMO
 						//					   P3.5 -- UCASOMI
@@ -74,6 +73,9 @@ int spi_initialize() {
 	
 	UCA0CTL1 &= ~UCSWRST; // Initialize USCI state machine
 	return success;
+#else
+	#error"SPI nao foi inicializado com sucesso"
+
 #endif
 	
 }
